@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "esdlalcges": {
+      "hosting": {
+        "esdlalcg": [
+          "esdlalcges"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "esdlalcges"
+  }
+}

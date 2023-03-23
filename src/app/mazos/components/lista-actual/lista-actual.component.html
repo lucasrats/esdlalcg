@@ -1,0 +1,82 @@
+<div class="row">
+    <div class="col-sm-12">
+      <div class="form-group">
+          <label for="frm_mazo_name">Nombre del mazo</label>
+          <input type="text" class="form-control" id="frm_mazo_name" [(ngModel)]="mazo.name" />
+      </div>
+          <div>Amenaza inicial: <b>{{ mazo.starting_threat }}</b></div>
+          <div class="deckcardcount">{{mazo.heroes.length}} Héroes, {{ this.getTotalCartas() }} Cartas</div>
+          <!--<div class="latestpack">Cartas hasta <i>{{ mazo.last_pack }}</i>
+          <small>
+              <i style="cursor: pointer; padding-left: 5px;" class="fa fa-eye expand-packs"></i>
+          </small>
+          </div>-->
+    </div>
+</div>
+
+<div class="row" *ngIf="this.getTotalCartas() < 50">
+  <div class="col-md-6">
+      <div class="alert alert-danger" role="alert">
+          <strong>El mazo todavía no tiene 50 cartas. Puedes guardarlo, pero recuerda que no está terminado.</strong>
+      </div>
+  </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <h5>
+            <span class="icon icon-hero"></span> Héroes ({{ mazo.heroes.length }})
+        </h5>
+        <div class="hero-deck-list">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-2" *ngFor="let heroe of (mazo.heroes | objectToArray)">
+                        <div class="deck-hero">
+                            <div class="hero-thumbnail card-thumbnail-2x card-thumbnail-hero" style="background-image:url('./assets/cards/{{heroe.code}}.png')"></div>
+                            <span class="icon icon-hero fg-{{ heroe.sphere_code }}"></span>
+                            <a href="#" (mouseover)="cartaModal = heroe" [ngbTooltip]="tipContent" placement="right" 
+                              class="fg-{{ heroe.sphere_code }}" data-bs-toggle="modal" data-bs-target="#cardModalQuantity" style="font-weight: bold;">{{ heroe.name }}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-6 col-print-6" *ngFor="let cartas of tiposCartasSort | objectToArray">
+    <div>
+      <h5>
+        <span class="icon icon-{{ cartas[0].type_code}}"></span> {{cartas[0].type_name}}
+      </h5>
+      <div *ngFor="let carta of cartas; first as isFirst">
+          <span class="card-count">{{ carta.copias }}x&nbsp;</span>
+          <span class="icon icon-{{ carta.type_code }} fg-{{ carta.sphere_code }}"></span>
+          <a href="#" (mouseover)="cartaModal = carta" [ngbTooltip]="tipContent" placement="right" 
+              class="fg-{{ carta.sphere_code }}" data-bs-toggle="modal" data-bs-target="#cardModalQuantity" style="font-weight: bold;">{{ carta.name }}</a>
+          <!--<small class="text-muted">{{ carta.pack_code }}</small>-->
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #tipContent>
+    <div class="qtip-content">
+        <div class="card-thumbnail card-thumbnail-3x card-thumbnail-ally" style="background-image:url('./assets/cards/{{ cartaModal.code }}.png')"></div>
+        <h4 class="card-name"><span class="icon-unique" *ngIf="cartaModal.is_unique"></span>{{ cartaModal.name }}</h4>
+        <div class="card-info"><span class="card-type">{{ cartaModal.type_name }}. </span>Coste: {{ cartaModal.cost == '' ? cartaModal.threat : cartaModal.cost}}. </div>
+        <div class="card-stats">
+            {{ cartaModal.willpower }} <span class="icon icon-willpower" title="Willpower"></span>&nbsp; 
+            {{ cartaModal.attack }} <span class="icon icon-attack" title="Attack"></span>&nbsp; 
+            {{ cartaModal.defense }} <span class="icon icon-defense" title="Defense"></span>&nbsp; 
+            {{ cartaModal.health }} <span class="icon icon-health" title="Hit Points"></span>&nbsp; 
+        </div>
+        <div class="card-traits">{{ cartaModal.traits }}</div>
+        <div class="card-text">
+            <p [innerHTML]="cartaModal.text"></p>
+        </div>
+        <span class="card-pack pull-right" style="clear:right">{{ cartaModal.pack_name }} #{{ cartaModal.position }}. </span>
+        <span class="card-sphere">{{ cartaModal.sphere_name }}. </span>
+    </div>
+</ng-template>

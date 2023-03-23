@@ -1,0 +1,100 @@
+<div class="row">
+    <div class="custom-control custom-radio custom-control-inline">
+        <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input">
+        <label class="custom-control-label" for="customRadioInline1">Toggle this custom radio</label>
+    </div>
+    <div class="custom-control custom-radio custom-control-inline">
+        <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input">
+        <label class="custom-control-label" for="customRadioInline2">Or toggle this other custom radio</label>
+    </div>
+</div>
+
+<div class="row">
+    <form class="p-4 p-md-5 border rounded-3 bg-light" [formGroup]="formBu" (ngSubmit)="buscar(formBu)">
+    <div class="table-responsive-sm">
+        <table class="table">
+            <caption>Lista de mazos</caption>
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">First</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let mazo of mazos">
+                <td class="decklist-hero-image hidden-xs">
+                    <div *ngFor="let heroe of mazo.heroes">
+                        <div class="deck-hero">
+                            <div class="hero-thumbnail card-thumbnail-2x card-thumbnail-hero" 
+                                 style="background-image:url('./assets/cards/{{heroe.code}}.png')"
+                                 (mouseover)="cartaModal = heroe" [ngbTooltip]="tipContent">
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <article>
+                        <h4>
+                            <small class="pull-right">	<span class="social-icons">
+                            <span class="social-icon-like" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Likes">
+                            <span class="fa fa-heart"></span> <span class="num">{{ mazo.nb_votes }}</span>
+                            </span>
+                            <span class="social-icon-favorite" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Favorites">
+                            <span class="fa fa-star"></span> <span class="num">{{ mazo.nb_favorites }}</span>
+                            </span>
+                            <span class="social-icon-comment" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Comments">
+                            <span class="fa fa-comment"></span> <span class="num">{{ mazo.nb_comments }}</span>
+                            </span>
+                            <span class="social-icon-version" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Version">
+                            <span class="fa fa-code-fork"></span> <span class="num">{{ mazo.version }}</span>
+                            </span>
+                            </span>
+                            </small>
+                            <a class="decklist-name" routerLink="/mazos/ver/{{ mazo._id}}">{{ mazo.name }}</a>
+                            <small class="starting-threat">{{ mazo.starting_threat }} amenaza inicial, cartas hasta <i>{{ mazo.last_pack }}</i></small>
+                        </h4>
+                        <h5>
+                            <time class="pull-right">{{ mazo.date_creation | date:'medium'}}</time>
+                            <span class="username">
+                                <a href="/user/profile/77/TheChad" class="fellowship">{{ mazo.user_id }}</a>
+                                <!--<span class="fa fa-gift patron" title="RingsDB Gracious Patron"></span><small class="reputation">10675</small>-->
+                            </span>
+                            <span class="small decklist-hero-text">
+                                <a *ngFor="let heroe of mazo.heroes" class="fg-leadership" data-toggle="modal" data-target="#cardModal" data-remote="false" href="">
+                                <span class="icon-leadership"></span> {{ heroe.code }} <i><!--(TBR)--></i>
+                                </a>
+                            </span>
+                        </h5>
+                    </article>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
+
+      <div class="row p-md-5">
+        <button type="submit" class="btn btn-primary">Enviar</button>
+      </div>
+
+    </form>
+</div>
+
+<ng-template #tipContent>
+    <div class="qtip-content">
+        <div class="card-thumbnail card-thumbnail-3x card-thumbnail-ally" style="background-image:url('./assets/cards/{{ cartaModal.code }}.png')"></div>
+        <h4 class="card-name"><span class="icon-unique" *ngIf="cartaModal.is_unique"></span>{{ cartaModal.name }}</h4>
+        <div class="card-info"><span class="card-type">{{ cartaModal.type_name }}. </span>Coste: {{ cartaModal.cost == '' ? cartaModal.threat : cartaModal.cost}}. </div>
+        <div class="card-stats">
+            {{ cartaModal.willpower }} <span class="icon icon-willpower" title="Willpower"></span>&nbsp; 
+            {{ cartaModal.attack }} <span class="icon icon-attack" title="Attack"></span>&nbsp; 
+            {{ cartaModal.defense }} <span class="icon icon-defense" title="Defense"></span>&nbsp; 
+            {{ cartaModal.health }} <span class="icon icon-health" title="Hit Points"></span>&nbsp; 
+        </div>
+        <div class="card-traits">{{ cartaModal.traits }}</div>
+        <div class="card-text">
+            <p [innerHTML]="cartaModal.text"></p>
+        </div>
+        <span class="card-pack pull-right" style="clear:right">{{ cartaModal.pack_name }} #{{ cartaModal.position }}. </span>
+        <span class="card-sphere">{{ cartaModal.sphere_name }}. </span>
+    </div>
+</ng-template>

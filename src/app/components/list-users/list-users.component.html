@@ -1,0 +1,32 @@
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-body">
+            <span class="h3">Listado usuarios</span>
+            <button class="btn btn-dark btn-lg float-end" routerLink="/create-user">Agregar</button>
+            <table class="table table-striped mt-4">
+                <thead>
+                  <tr>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Nick</th>
+                    <th>Email</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let user of users">
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.lastname }}</td>
+                    <td>{{ user.nickname }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>
+                        <button (click)="onClickDelete(user)"><i class="fa-solid fa-pen-to-square fa-lg text-info me-3"></i></button>
+                        <i class="fa-solid fa-trash fa-lg text-danger"></i>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+        </div>
+    </div>
+</div>

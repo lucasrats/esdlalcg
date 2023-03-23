@@ -1,0 +1,10 @@
+<app-buscador-cartas
+    (onSubmit)="buscar( $event )"
+></app-buscador-cartas>
+
+<div *ngIf="cartas.length > 0" 
+    class="row">
+    <div class="col">
+        <app-lista-cartas [cartas]="cartas"></app-lista-cartas>
+    </div>
+</div>

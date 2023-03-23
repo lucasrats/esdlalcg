@@ -1,0 +1,25 @@
+<table class="table caption-top table-striped">
+    <caption>Lista de retos</caption>
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Fecha inicio</th>
+        <th scope="col">Fecha fin</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let reto of retos">
+        <th scope="row"> {{ reto.id }} </th>
+        <td> {{ reto.name }} </td>
+        <td> {{ reto.date_start}} </td>
+        <td> {{ reto.date_end }} </td>
+        <td>
+            <button type="button" class="btn btn-primary"><i class="far fa-eye"></i></button>
+            <button type="button" class="btn btn-success"><i class="fas fa-edit"></i></button>
+            <button type="button" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>

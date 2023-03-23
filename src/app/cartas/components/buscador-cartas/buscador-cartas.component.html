@@ -1,0 +1,146 @@
+<div class="container-fluid">
+    <form class="p-4 p-md-5 border rounded-3 bg-light" [formGroup]="formBu" (ngSubmit)="buscar()">
+    <div class="row">
+        <div class="col">
+            <div class="row">
+                <h2>¿Nombres o palabras?</h2>
+                <div class="row">
+                    <label for="buNombre">Nombre</label>
+                    <input type="text" class="form-control" id="buNombre" placeholder="" formControlName="name">
+                </div>
+                <div class="row g-2">
+                    <div class="col-md">
+                        <label for="buText">Texto</label>
+                        <input type="text" class="form-control" id="butext" placeholder="" formControlName="text">
+                    </div>
+                    <div class="col-md">
+                        <label for="buFlavor">Texto ambientación</label>
+                        <input type="text" class="form-control" id="buFlavor" placeholder="" formControlName="flavor">
+                    </div>
+                </div>
+                <div class="row">
+                    <h2>Esferas</h2>
+                    <div class="col-md">
+                        <div class="btn-group" data-toggle="buttons" *ngFor="let data of spheres; let i=index">
+                            <input type="checkbox" [value]="data.value" id="ch{{data.value}}">
+                            <label data-bs-toggle="button" for="ch{{data.value}}" class="btn btn-default sphere-selector active" (click)="onCheckboxChange($event)" title="{{data.value}}">
+                                <span class="icon icon-{{data.value}} fg-{{data.value}}" title="{{data.value}}"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <h2>Otros</h2>
+                    <div class="col-md">
+                        <label for="buIllustrator">Ilustrador</label>
+                        <select id="buIllustrator" formControlName="illustrator" class="form-select">
+                            <option *ngFor="let illustrator of illustrators" [ngValue]="illustrator.value">{{ illustrator.name }}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <h2>Atributos</h2>
+            <div class="row g-2">
+                <div class="col-md">
+                    <label for="buCycle">Ciclo</label>
+                    <select id="buCycle" formControlName="cycle" class="form-select">
+                        <option *ngFor="let cycle of cycles" [ngValue]="cycle.value">{{ cycle.name }}</option>
+                    </select>
+                </div>
+                <div class="col-md">
+                    <label for="buPackCode">Set</label>
+                    <select id="buPackCode" formControlName="pack_code" class="form-select">
+                        <option *ngFor="let pack of pack_code" [ngValue]="pack.value">{{ pack.name }}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row g-2">
+                <div class="col-md">
+                    <label for="buTypeCode">Tipo</label>
+                    <select id="buTypeCode" formControlName="type_code" class="form-select">
+                        <option *ngFor="let type of type_codes" [ngValue]="type.value">{{ type.name }}</option>
+                    </select>
+                </div>
+                <div class="col-md">
+                    <label for="buTraits">Rasgos</label>
+                    <select id="buTraits" formControlName="traits" class="form-select">
+                        <option *ngFor="let trait of traits" [ngValue]="trait.value">{{ trait.name }}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row g-2">
+                <div class="col-md">
+                    <label for="buUnique">Única</label>
+                    <select id="buUnique" formControlName="is_unique" class="form-select">
+                        <option *ngFor="let option of yes_no" [ngValue]="option.value">{{ option.name }}</option>
+                    </select>
+                </div>
+                <div class="col-md">
+                    <label for="buErrata">Errateada</label>
+                    <select id="buErrata" formControlName="has_errata" class="form-select">
+                        <option *ngFor="let option of yes_no" [ngValue]="option.value">{{ option.name }}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <h2>Estadísticas</h2>
+            <div class="row g-2">
+                <div class="col-md">
+                    <label for="buCost">Coste</label>
+                    <select id="buoCost" formControlName="ocost" class="form-select">
+                        <option *ngFor="let operator of operators" [ngValue]="operator.value">{{ operator.name }}</option>
+                    </select>
+                    <input type="text" class="form-control" id="buCost" placeholder="" formControlName="cost">
+                </div>
+                <div class="col-md">
+                    <label for="buThreath">Amenaza</label>
+                    <select id="buoThreath" formControlName="othreat" class="form-select">
+                        <option *ngFor="let operator of operators" [ngValue]="operator.value">{{ operator.name }}</option>
+                    </select>
+                    <input type="text" class="form-control" id="buThreath" placeholder="" formControlName="threat">
+                </div>
+            </div>
+            <div class="row g-2">
+                <div class="col-md">
+                    <label for="buWillpower">Voluntad</label>
+                    <select id="buoWillpower" formControlName="owillpower" class="form-select">
+                        <option *ngFor="let operator of operators" [ngValue]="operator.value">{{ operator.name }}</option>
+                    </select>
+                    <input type="text" class="form-control" id="buWillpower" placeholder="" formControlName="willpower">
+                </div>
+                <div class="col-md">
+                    <label for="buAttack">Ataque</label>
+                    <select id="buoAttack" formControlName="oattack" class="form-select">
+                        <option *ngFor="let operator of operators" [ngValue]="operator.value">{{ operator.name }}</option>
+                    </select>
+                    <input type="text" class="form-control" id="buAttack" placeholder="" formControlName="attack">
+                </div>
+            </div>
+            <div class="row g-2">
+                <div class="col-md">
+                    <label for="buDefense">Defensa</label>
+                    <select id="buoDefense" formControlName="odefense" class="form-select">
+                        <option *ngFor="let operator of operators" [ngValue]="operator.value">{{ operator.name }}</option>
+                    </select>
+                    <input type="text" class="form-control" id="buDefense" placeholder="" formControlName="defense">
+                </div>
+                <div class="col-md">
+                    <label for="buHealth">Puntos de impacto</label>
+                    <select id="buoHealth" formControlName="ohealth" class="form-select">
+                        <option *ngFor="let operator of operators" [ngValue]="operator.value">{{ operator.name }}</option>
+                    </select>
+                    <input type="text" class="form-control" id="buHealth" placeholder="" formControlName="health">
+                </div>
+            </div>
+        </div>
+      </div>
+
+      <div class="row p-md-5">
+        <button type="submit" class="btn btn-primary">Enviar</button>
+      </div>
+
+    </form>
+</div>

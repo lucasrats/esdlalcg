@@ -1,0 +1,64 @@
+<div class="container px-4 py-5" id="hanging-icons">
+    <h2 class="pb-2 border-bottom">Hanging icons</h2>
+    <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+      <div class="col d-flex align-items-start">
+        <div class="icon-square text-bg-light d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
+          <svg class="bi" width="1em" height="1em"><use xlink:href="#toggles2"></use></svg>
+        </div>
+        <div>
+          <h3 class="fs-2">Crea tu propio mazo</h3>
+          <p>Desde cero con el constructor y visualizando las cartas que más te convencen</p>
+          <a routerLink="/mazos/crear" class="btn btn-primary">
+            Crear mazo
+          </a>
+        </div>
+      </div>
+      <div class="col d-flex align-items-start">
+        <div class="icon-square text-bg-light d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
+          <svg class="bi" width="1em" height="1em"><use xlink:href="#cpu-fill"></use></svg>
+        </div>
+        <div>
+          <h3 class="fs-2">Tráete cualquier mazo desde RingsDB</h3>
+          <p>Si quieres traerte algún mazo desde RingsDB, tuyo o de otra persona, sólo te hará falta copiar la url. Podrás visualizar las cartas y su contenido en español con tan solo un click.</p>
+          <!--<a routerLink="/mazos/importar" class="btn btn-primary">
+            Importar mazo
+          </a>-->
+          <!-- Button trigger modal -->
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#importModal">
+            Importar mazo
+          </button>
+
+          <!-- Modal -->
+          <div class="modal fade" id="importModal" tabindex="-1" aria-labelledby="importModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="importModalLabel">Importar mazo</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <input class="form-control form-control-sm" type="text" placeholder="Introduce la url del mazo de ringsDB" aria-label=".form-control-sm example">
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                  <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="enviarUrl('2')">Continuar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col d-flex align-items-start">
+        <div class="icon-square text-bg-light d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
+          <svg class="bi" width="1em" height="1em"><use xlink:href="#tools"></use></svg>
+        </div>
+        <div>
+          <h3 class="fs-2">Listado de mazos</h3>
+          <p>Directamente consulta cualquier mazo publicado en ESDLALCG.es y échale un ojo.</p>
+          <a routerLink="/mazos/lista" class="btn btn-primary">
+            Ver mazos
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>

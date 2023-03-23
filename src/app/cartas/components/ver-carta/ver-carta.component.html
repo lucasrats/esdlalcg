@@ -1,0 +1,67 @@
+<div *ngIf="!carta; else divCarta" class="d-flex align-items-center">
+    <strong>Cargando...</strong>
+    <div class="spinner-border ms-auto" role="status" aria-hidden="true"></div>
+</div>
+
+<ng-template #divCarta>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="card mb-4 rounded-3 shadow-sm">
+                        <div class="card-header py-3">
+                          <h4 class="my-0 fw-normal">
+                            <span *ngIf="carta.is_unique == 'true'" class="icon-unique"></span>
+                            <span id="name" class="card-name">{{carta.name}}</span>
+                          </h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-8">
+                                    <h4 class="card-title">
+                                        <b>{{carta.type_name}}</b>.
+                                        <small>
+                                            <span class="card-props">
+                                                <ng-container *ngIf="carta.cost == ''; else elseCost">
+                                                    Amenaza: {{carta.threat}}
+                                                </ng-container>
+                                                <ng-template #elseCost>
+                                                    Coste: {{carta.cost}}
+                                                </ng-template>
+                                            </span>
+                                        </small>
+                                    </h4>
+                                </div>
+                                <div class="col">
+                                    <span id="willpower"></span>{{carta.willpower}}&nbsp;<span class="icon icon-willpower" title="" data-toggle="tooltip" data-container="body" data-original-title="Willpower"></span>&nbsp;
+                                    <span id="attack"></span>{{carta.attack}}&nbsp;<span class="icon icon-attack" title="" data-toggle="tooltip" data-container="body" data-original-title="Attack"></span>&nbsp;
+                                    <span id="defense"></span>{{carta.defense}}&nbsp;<span class="icon icon-defense" title="" data-toggle="tooltip" data-container="body" data-original-title="Defense"></span>&nbsp;
+                                    <span id="health"></span>{{carta.health}}&nbsp;<span class="icon icon-health text-danger" title="" data-toggle="tooltip" data-container="body" data-original-title="Hit Points"></span>&nbsp;
+                                </div>
+                              </div>
+                              <p id="traits" class="card-traits font-weight-bold font-italic">{{carta.traits}}</p>
+                              <p id="text" class="card-text" [innerHTML]="carta.text"></p>
+                              <p id="flavor" class="card-flavor small" [innerHTML]="carta.flavor"></p>
+                              <blockquote class="blockquote">
+                                <footer class="blockquote-footer"><p><span id="illustrator" class="fa fa-paint-brush text-muted"></span>&nbsp;{{carta.illustrator}}</p></footer>
+                              </blockquote>
+                              <div class="row">
+                                <div class="col-8">
+                                    <span id="sphere_name" class="card-sphere"><span class="icon icon-{{carta.sphere_code}} fg-{{carta.sphere_code}}" title="{{carta.sphere_code}}"></span>&nbsp;{{carta.sphere_name}}</span>
+                                </div>
+                                <div class="col">
+                                    <span id="pack_name" class="card-pack">{{carta.pack_name}} #{{carta.position}}</span>
+                                </div>
+                              </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6" style="margin-bottom:2em">
+                <div>
+                    <img src="./assets/cards/{{ carta.code }}.png" id="image" class="img-responsive card-full-image" style="margin:auto">
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

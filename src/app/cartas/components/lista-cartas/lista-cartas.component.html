@@ -1,0 +1,40 @@
+<!--<app-buscador-cartas></app-buscador-cartas>-->
+<div class="container-fluid">
+  <table class="table table-striped">
+      <thead>
+    <tr>
+      <th scope="col">Nombre</th>
+      <th scope="col">Tipo</th>
+      <th scope="col">Coste</th>
+      <th scope="col"><span class="icon-willpower"></span></th>
+      <th scope="col"><span class="icon-attack"></span></th>
+      <th scope="col"><span class="icon-defense"></span></th>
+      <th scope="col"><span class="icon-health"></span></th>
+      <th scope="col">Rasgos</th>
+      <th scope="col">Set</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let carta of cartas">
+      <td>
+        <span class="icon icon-{{ carta.type_code | lowercase }} fg-{{ carta.sphere_code }}">&nbsp;</span>
+        <a routerLink="/carta/{{ carta.code }}" (mouseover)="numcarta = carta.code" [ngbTooltip]="tipContent" class="fg-{{ carta.sphere_code }}">{{ carta.name }}</a>
+      </td>
+      <td><span class="icon icon-{{ carta.type_code | lowercase }}">&nbsp;</span>{{ carta.type_name }}</td>
+      <td>{{ carta.cost == '' ? carta.threat : carta.cost}}</td>
+      <td>{{ carta.willpower }}</td>
+      <td>{{ carta.attack }}</td>
+      <td>{{ carta.defense }}</td>
+      <td>{{ carta.health }}</td>
+      <td>{{ carta.traits }}</td>
+      <td>{{ carta.pack_name }}</td>
+    </tr>
+    
+  </tbody>
+
+  </table>
+</div>
+
+<ng-template #tipContent>
+      <img src="./assets/cards/{{ numcarta }}.png" class="img-responsive card-full-image">
+</ng-template>

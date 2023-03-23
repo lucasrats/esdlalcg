@@ -1,0 +1,50 @@
+<div class="p-4 p-md-5 border rounded-3 bg-light ng-untouched ng-pristine ng-valid">
+  <div class="row" *ngIf="cargaOK == false">
+      <div class="col-md-6">
+          <div class="d-flex align-items-center">
+              <strong>Cargando...</strong>
+              <div class="spinner-border ms-auto" role="status" aria-hidden="true"></div>
+          </div>
+      </div>
+  </div>
+
+  <div class="row" *ngIf="cargaOK == true">
+
+      <div class="col-md-6">
+
+          <app-lista-actual [tiposCartasSort]=this.tiposCartasSort [mazo]=this.mazo></app-lista-actual>
+
+          <div class="row">
+            <button class="btn btn-success" (click)="onSubmit()">Salvar</button>
+          </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-12">
+
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link active" id="minibuscador-tab" data-bs-toggle="tab" data-bs-target="#minibuscador" type="button" role="tab" aria-controls="minibuscador" aria-selected="true">Cartas</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" id="comentarios-tab" data-bs-toggle="tab" data-bs-target="#comentarios" type="button" role="tab" aria-controls="comentarios" aria-selected="false">Comentarios</button>
+                </li>
+              </ul>
+              <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="minibuscador" role="tabpanel" aria-labelledby="minibuscador-tab">
+                    <app-mini-buscador [slotsPadre]="this.mazo.slots" [heroesPadre]="this.mazo.heroes" (eventoCopias)="onEventoCopiasMiniB($event)"></app-mini-buscador>
+                </div>
+                <div class="tab-pane fade" id="comentarios" role="tabpanel" aria-labelledby="comentarios-tab">
+                    <div class="form-group">
+                        <label for="exampleFormControlTextarea1">Descripción del mazo</label>
+                        <textarea class="form-control" id="frm_mazo_description_md" [(ngModel)]="mazo.description_md" rows="15" (keyup)="parsear($event)"></textarea>
+                    </div>
+                </div>
+              </div>
+            
+          </div>
+        </div>
+      </div>
+      
+</div>
