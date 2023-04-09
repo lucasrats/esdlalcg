@@ -1,23 +1,29 @@
 <div class="row">
-    <div class="custom-control custom-radio custom-control-inline">
-        <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input">
-        <label class="custom-control-label" for="customRadioInline1">Toggle this custom radio</label>
-    </div>
-    <div class="custom-control custom-radio custom-control-inline">
-        <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input">
-        <label class="custom-control-label" for="customRadioInline2">Or toggle this other custom radio</label>
-    </div>
+    <form class="p-4 p-md-5 border rounded-3 bg-light" [formGroup]="formBu" (ngSubmit)="buscar(formBu)">
+        <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input">
+            <label class="custom-control-label" for="customRadioInline1">Toggle this custom radio</label>
+        </div>
+        <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input">
+            <label class="custom-control-label" for="customRadioInline2">Or toggle this other custom radio</label>
+        </div>
+
+        <div class="row p-md-5">
+            <button type="submit" class="btn btn-primary">Enviar</button>
+        </div>
+
+    </form>
 </div>
 
 <div class="row">
-    <form class="p-4 p-md-5 border rounded-3 bg-light" [formGroup]="formBu" (ngSubmit)="buscar(formBu)">
     <div class="table-responsive-sm">
         <table class="table">
             <caption>Lista de mazos</caption>
             <thead>
               <tr>
-                <th scope="col">#</th>
-                <th scope="col">First</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
               </tr>
             </thead>
             <tbody>
@@ -71,12 +77,6 @@
             </tbody>
           </table>
       </div>
-
-      <div class="row p-md-5">
-        <button type="submit" class="btn btn-primary">Enviar</button>
-      </div>
-
-    </form>
 </div>
 
 <ng-template #tipContent>

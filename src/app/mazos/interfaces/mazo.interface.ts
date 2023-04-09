@@ -42,7 +42,7 @@ export interface Mazo_BD {
 }
 
 export interface Mazos {
-    _id:              string;
+    _id:             string;
     name:            string;
     date_creation:   Date;
     date_update:     Date;

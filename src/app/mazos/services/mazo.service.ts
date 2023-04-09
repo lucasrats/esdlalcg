@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { collection, Firestore, addDoc, collectionData, doc, deleteDoc, getDocs, updateDoc, setDoc, QueryConstraint, where, query, getDoc } from '@angular/fire/firestore';
 import { Mazos, Mazos_ringsdb, Mazo_BD } from '../interfaces/mazo.interface';
 import { firstValueFrom, lastValueFrom, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { CardService } from 'src/app/cartas/services/card.service';
 import { Cartas_constructor } from 'src/app/cartas/interfaces/carta.interface';
 import { FormGroup } from '@angular/forms';
@@ -19,6 +20,7 @@ export class MazoService {
   ) { }
 
   urlApiMazo: string = "https://ringsdb.com/api/public/decklist/3382";
+  url_api = "http://localhost:3000/api/mazo";
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -29,8 +31,7 @@ export class MazoService {
   mazo: Mazos = null!;
 
   guardarMazo( mazo: Mazo_BD){
-    const mazoRef = collection(this.firestore, 'mazos');
-    return addDoc(mazoRef, mazo);
+    return this.http.post(this.url_api + "/nuevo", mazo, this.httpOptions) as Observable<Mazos>;
   }
   
   actualizarMazo( mazo: Mazo_BD){
@@ -134,8 +135,7 @@ export class MazoService {
 
   getAllMazos(){
 
-    let url = "http://localhost:3000/api/mazo/getAll";
-    return this.http.get(url, this.httpOptions) as Observable<Mazos[]>;
+    return this.http.get(this.url_api + "/getAll", this.httpOptions) as Observable<Mazos[]>;
 
   }
 
@@ -174,19 +174,25 @@ export class MazoService {
 
   }
 
-  async getDeckById( id: string){
+  async getDeckById( id: string): Promise<Mazos>{
 
-    const docRef = doc(this.firestore, "mazos", id);
-    const docSnap = await getDoc(docRef);
-
-    var res = docSnap.data() as Observable<Mazos>;
+    //var res = this.http.get(this.url_api + "/getOne/" + id, this.httpOptions) as Observable<Mazos>;
     
-    this.mazo = JSON.parse(JSON.stringify(res));
-    let resultado1 = await this.rellenarHeroes();
-    let resultado2 = await this.rellenarSlots();
-
-    return this.mazo;
-
+    return new Promise<Mazos>((resolve, reject) => {
+      this.http.get<Mazos>(this.url_api + "/getOne/" + id, this.httpOptions) 
+      .subscribe(
+        async (mazo) => {
+        this.mazo = JSON.parse(JSON.stringify(mazo));
+        let resultado1 = await this.rellenarHeroes();
+        let resultado2 = await this.rellenarSlots();
+        resolve(this.mazo);
+        },
+        (error) => {
+          reject(error);
+        }
+      )
+    })
+    
   }
 
   async rellenarHeroes(){

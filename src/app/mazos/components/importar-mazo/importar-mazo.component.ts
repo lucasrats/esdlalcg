@@ -7,6 +7,7 @@ import { ObjectToArrayPipe } from 'src/app/pipes/objectToArray.pipe';
 import { lastValueFrom, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { Cartas_constructor, Cartas_Mazo_BD } from 'src/app/cartas/interfaces/carta.interface';
+import { getAuth, onAuthStateChanged } from '@firebase/auth';
 
 @Component({
   selector: 'app-importar-mazo',
@@ -45,6 +46,15 @@ export class ImportarMazoComponent implements OnInit{
       this.mazo = JSON.parse(JSON.stringify(resultado));
       this.tiposCartasSort = this.groupBy(this.mazo.slots,'type_code');
 
+      const auth = getAuth();
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          this.mazo.user_id = user.uid;
+        } else {
+          console.log("No hay usuario activo");
+        }
+      })
+
       this.cargaOK = true;
 
     } catch (error) {
@@ -77,9 +87,9 @@ export class ImportarMazoComponent implements OnInit{
     if(this.mazo._id == ''){
       this.mazo.date_creation = new Date(Date.now());
       this.mazoService.guardarMazo(this.mazoSubmit)
-      .then(response => {
-        console.log("grabado OK. Creado id: " + response.id);
-        this.mazo._id = response.id;
+      .subscribe(response => {
+        console.log("grabado OK. Creado id: " + response._id);
+        this.mazo._id = response._id;
       })
     }
     else{

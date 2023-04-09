@@ -30,6 +30,7 @@ export class VerMazoComponent implements OnInit{
         let idDeck = params['id'];
   
         var resultado = await this.mazoService.getDeckById(idDeck);
+        
         this.mazo = JSON.parse(JSON.stringify(resultado));
         this.tiposCartasSort = this.groupBy(this.mazo.slots,'type_code');
 

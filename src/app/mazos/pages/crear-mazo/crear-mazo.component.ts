@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { getAuth } from '@angular/fire/auth';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
+import { onAuthStateChanged } from '@firebase/auth';
 import { Cartas_constructor } from 'src/app/cartas/interfaces/carta.interface';
 import { CardService } from 'src/app/cartas/services/card.service';
 import { Mazos, Mazo_BD } from '../../interfaces/mazo.interface';
@@ -54,13 +56,22 @@ export class CrearMazoComponent implements OnInit{
 
   }
   ngOnInit() {
-    
+
+    const auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        this.mazo.user_id = user.uid;
+      } else {
+        console.log("No hay usuario activo");
+      }
+    })
   }
 
   onSubmit(){
 
     this.mazo.date_update = new Date(Date.now());
     this.mazoSubmit = JSON.parse(JSON.stringify(this.mazo));
+
     for (let objeto of this.mazoSubmit.heroes) {
       for (let propiedad in objeto) {
         if (propiedad !== '_id' && propiedad !== 'copias' && propiedad !== 'code') {
@@ -81,9 +92,9 @@ export class CrearMazoComponent implements OnInit{
       this.mazo.date_creation = new Date(Date.now());
       console.log(this.mazoSubmit);
       this.mazoService.guardarMazo(this.mazoSubmit)
-      .then(response => {
-        console.log("grabado OK. Creado id: " + response.id);
-        this.mazo._id = response.id;
+      .subscribe(response => {
+        console.log("grabado OK. Creado id: " + response._id);
+        this.mazo._id = response._id;
       })
     }
     else{
